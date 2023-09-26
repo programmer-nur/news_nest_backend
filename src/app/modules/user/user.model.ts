@@ -17,12 +17,17 @@ export const userSchema = new Schema<IUser, IUserModel>(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-    },
+    image: String,
     role: {
+      type: String,
       enum: ['user', 'admin'],
       required: true,
+    },
+    bookmarks: {
+      type: [],
+    },
+    notes: {
+      type: [],
     },
   },
   {
