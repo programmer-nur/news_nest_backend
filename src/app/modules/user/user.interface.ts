@@ -11,6 +11,9 @@ export interface IUser {
   notes?: [];
 }
 
+export interface IRefreshTokenResponse {
+  accessToken: string;
+}
 export interface ILogin {
   email: string;
   password: string;
