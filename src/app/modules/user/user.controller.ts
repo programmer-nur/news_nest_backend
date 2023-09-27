@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import tryAsync from '../../../shared/tryAsync';
 import { UserService } from './user.service';
 import sendResponse from '../../../shared/sendResponse';
-import { IUser } from './user.interface';
+import { IRefreshTokenResponse, IUser } from './user.interface';
 import config from '../../../config';
 
 const createUser = tryAsync(async (req: Request, res: Response) => {
@@ -31,8 +31,26 @@ const loginUser = tryAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Refresh token create successfully!',
+    message: 'User logged in successfully !',
     data: others,
   });
 });
-export const UserController = { createUser, loginUser };
+
+const refreshToken = tryAsync(async (req: Request, res: Response) => {
+  const { refreshToken } = req.cookies;
+  const result = await UserService.refreshToken(refreshToken);
+
+  const cookieOptions = {
+    secure: config.env === 'production',
+    httpOnly: true,
+  };
+
+  res.cookie('refreshToken', refreshToken, cookieOptions);
+  sendResponse<IRefreshTokenResponse>(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Refresh token create  successfully !',
+    data: result,
+  });
+});
+export const UserController = { createUser, loginUser, refreshToken };
