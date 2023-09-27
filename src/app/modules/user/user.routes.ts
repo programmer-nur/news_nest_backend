@@ -5,6 +5,7 @@ import { UserValidation } from './user.validation';
 
 const router = express.Router();
 
+router.post('/login', UserController.loginUser);
 router.post(
   '/create-user',
   validateRequest(UserValidation.createUser),
