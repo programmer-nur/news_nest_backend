@@ -22,4 +22,4 @@ export interface NewsItem {
   }[];
 }
 
-export type News = Model<NewsItem, Record<string, unknown>>;
+export type NewsModel = Model<NewsItem, Record<string, unknown>>;
