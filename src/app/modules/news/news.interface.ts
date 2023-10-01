@@ -22,4 +22,11 @@ export interface NewsItem {
   }[];
 }
 
+export interface INewsFilters {
+  searchTerm?: string;
+  heading?: string;
+  reporter?: string;
+  publishedDate?: Date;
+}
+
 export type NewsModel = Model<NewsItem, Record<string, unknown>>;
