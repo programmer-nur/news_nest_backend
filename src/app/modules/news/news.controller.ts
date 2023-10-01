@@ -14,5 +14,14 @@ const insertIntoDb = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getAllFromDb = tryAsync(async (req: Request, res: Response) => {
+  const result = await NewsService.getAllFromDb();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'News get all  successfully!',
+    data: result,
+  });
+});
 
-export const NewsController = { insertIntoDb };
+export const NewsController = { insertIntoDb, getAllFromDb };
