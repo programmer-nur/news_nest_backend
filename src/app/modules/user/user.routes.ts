@@ -17,5 +17,5 @@ router.post(
     return UserController.createUser(req, res, next);
   }
 );
-
+router.get('/', UserController.getSingleUser);
 export const UserRoutes = router;

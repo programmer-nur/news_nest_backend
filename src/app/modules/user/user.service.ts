@@ -34,6 +34,11 @@ const createUser = async (req: Request) => {
   return result;
 };
 
+const getSingleUser = async (email: string): Promise<IUser | null> => {
+  const result = await User.findOne({ email: email });
+  return result;
+};
+
 const addToBookmarkList = async (email: string, data: NewsItem) => {
   const result = await User.findOneAndUpdate(
     { email: email },
@@ -121,4 +126,5 @@ export const UserService = {
   refreshToken,
   addToBookmarkList,
   removeBookmarkList,
+  getSingleUser,
 };

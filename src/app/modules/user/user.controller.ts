@@ -15,6 +15,16 @@ const createUser = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getSingleUser = tryAsync(async (req: Request, res: Response) => {
+  const { email } = req.query;
+  const result = await UserService.getSingleUser(email as string);
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User fetched successfully!',
+    data: result,
+  });
+});
 
 const addToBookmarkList = tryAsync(async (req: Request, res: Response) => {
   const user = req.user;
@@ -83,4 +93,5 @@ export const UserController = {
   loginUser,
   refreshToken,
   removeBookmarkList,
+  getSingleUser,
 };
