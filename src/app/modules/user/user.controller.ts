@@ -15,6 +15,16 @@ const createUser = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const addToBookmarkList = tryAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const result = await UserService.addToBookmarkList(user?.userEmail, req.body);
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User created successfully!',
+    data: result,
+  });
+});
 
 const loginUser = tryAsync(async (req: Request, res: Response) => {
   const { ...loginData } = req.body;
@@ -52,4 +62,9 @@ const refreshToken = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-export const UserController = { createUser, loginUser, refreshToken };
+export const UserController = {
+  createUser,
+  addToBookmarkList,
+  loginUser,
+  refreshToken,
+};

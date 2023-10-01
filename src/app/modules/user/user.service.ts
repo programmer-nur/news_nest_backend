@@ -9,6 +9,7 @@ import { Secret } from 'jsonwebtoken';
 import { IFileUpload } from '../../../interfaces/fileUpload';
 import { Request } from 'express';
 import { FileUploadHelper } from '../../../helpers/fileUploadHelper';
+import { NewsItem } from '../news/news.interface';
 
 const createUser = async (req: Request) => {
   const file = req.file as IFileUpload;
@@ -32,6 +33,16 @@ const createUser = async (req: Request) => {
   }
   console.log(user);
   const result = await User.create(user);
+  return result;
+};
+
+const addToBookmarkList = async (email: string, data: NewsItem) => {
+  const result = await User.findOneAndUpdate(
+    { email: email },
+    {
+      $push: { bookmarks: data },
+    }
+  );
   return result;
 };
 
@@ -97,4 +108,9 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   };
 };
 
-export const UserService = { createUser, loginUser, refreshToken };
+export const UserService = {
+  createUser,
+  loginUser,
+  refreshToken,
+  addToBookmarkList,
+};
