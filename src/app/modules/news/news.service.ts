@@ -62,4 +62,9 @@ const getAllFromDb = async (
   };
 };
 
-export const NewsService = { insertIntoDb, getAllFromDb };
+const getByIdFromDb = async (id: string) => {
+  const result = await News.findById({ _id: id });
+  return result;
+};
+
+export const NewsService = { insertIntoDb, getAllFromDb, getByIdFromDb };
