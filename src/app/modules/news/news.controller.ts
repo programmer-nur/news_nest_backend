@@ -33,4 +33,14 @@ const getAllFromDb = tryAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const NewsController = { insertIntoDb, getAllFromDb };
+const getByIdFromDb = tryAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await NewsService.getByIdFromDb(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Single News fetched successfully!',
+    data: result,
+  });
+});
+export const NewsController = { insertIntoDb, getAllFromDb, getByIdFromDb };
