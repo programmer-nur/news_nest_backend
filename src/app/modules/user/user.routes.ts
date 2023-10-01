@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post('/login', UserController.loginUser);
 router.patch('/addToBookmark', auth(), UserController.addToBookmarkList);
+router.patch('/removeBookmark', auth(), UserController.removeBookmarkList);
 router.post(
   '/create-user',
   FileUploadHelper.upload.single('file'),

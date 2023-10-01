@@ -15,9 +15,24 @@ const createUser = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const addToBookmarkList = tryAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const result = await UserService.addToBookmarkList(user?.userEmail, req.body);
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User created successfully!',
+    data: result,
+  });
+});
+
+const removeBookmarkList = tryAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const result = await UserService.removeBookmarkList(
+    user?.userEmail,
+    req.body
+  );
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -67,4 +82,5 @@ export const UserController = {
   addToBookmarkList,
   loginUser,
   refreshToken,
+  removeBookmarkList,
 };

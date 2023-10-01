@@ -19,7 +19,6 @@ const createUser = async (req: Request) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Already exist this email.');
   }
   const uploadedImage = await FileUploadHelper.uploadToCloudinary(file);
-  console.log(uploadedImage);
   if (uploadedImage) {
     user.image = uploadedImage.secure_url;
   }
@@ -31,7 +30,6 @@ const createUser = async (req: Request) => {
   if (!user.role) {
     user.role = 'user';
   }
-  console.log(user);
   const result = await User.create(user);
   return result;
 };
@@ -41,6 +39,15 @@ const addToBookmarkList = async (email: string, data: NewsItem) => {
     { email: email },
     {
       $push: { bookmarks: data },
+    }
+  );
+  return result;
+};
+const removeBookmarkList = async (email: string, data: NewsItem) => {
+  const result = await User.findOneAndUpdate(
+    { email: email },
+    {
+      $pull: { bookmarks: data },
     }
   );
   return result;
@@ -113,4 +120,5 @@ export const UserService = {
   loginUser,
   refreshToken,
   addToBookmarkList,
+  removeBookmarkList,
 };
