@@ -1,21 +1,13 @@
 import { z } from 'zod';
 
 const createUser = z.object({
-  body: z.object({
-    name: z.string({
-      required_error: 'Name is required',
-    }),
-    email: z.string({
-      required_error: 'Email is required',
-    }),
-    password: z.string({
-      required_error: 'Email is required',
-    }),
-    image: z.string().optional(),
-    role: z.string().optional(),
-    bookmarks: z.string().optional(),
-    notes: z.string().optional(),
-  }),
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  image: z.string().optional(),
+  role: z.enum(['user', 'admin']).optional(),
+  bookmarks: z.array(z.unknown()).optional(),
+  notes: z.array(z.unknown()).optional(),
 });
 
 export const UserValidation = { createUser };

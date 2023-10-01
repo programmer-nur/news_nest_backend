@@ -24,20 +24,10 @@ export const userSchema = new Schema<IUser, IUserModel>(
       required: true,
     },
     bookmarks: {
-      type: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'News',
-        },
-      ],
+      type: [],
     },
     notes: {
-      type: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'News',
-        },
-      ],
+      type: [],
     },
   },
   {

@@ -10,25 +10,27 @@ import { IFileUpload } from '../../../interfaces/fileUpload';
 import { Request } from 'express';
 import { FileUploadHelper } from '../../../helpers/fileUploadHelper';
 
-const createUser = async (user: IUser, req: Request) => {
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
+const createUser = async (req: Request) => {
   const file = req.file as IFileUpload;
-  const uploadedImage = await FileUploadHelper.uploadToCloudinary(file);
-
-  if (uploadedImage) {
-    req.body.image = uploadedImage.secure_url;
-  }
+  const user = req.body as IUser;
   const isUserExist = await User.isUserExist(user?.email);
   if (isUserExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Already exist this email.');
   }
+  const uploadedImage = await FileUploadHelper.uploadToCloudinary(file);
+  console.log(uploadedImage);
+  if (uploadedImage) {
+    user.image = uploadedImage.secure_url;
+  }
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+
   if (!user.role) {
     user.role = 'user';
   }
-
+  console.log(user);
   const result = await User.create(user);
   return result;
 };

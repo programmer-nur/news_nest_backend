@@ -1,5 +1,4 @@
-import { Model, Types } from 'mongoose';
-import { NewsItem } from '../news/news.interface';
+import { Model } from 'mongoose';
 
 /* eslint-disable no-unused-vars */
 export interface IUser {
@@ -8,8 +7,8 @@ export interface IUser {
   password: string;
   image?: string;
   role: 'user' | 'admin';
-  bookmarks?: [news: Types.ObjectId | NewsItem];
-  notes?: [news: Types.ObjectId | NewsItem];
+  bookmarks?: [];
+  notes?: [];
 }
 
 export interface IRefreshTokenResponse {
