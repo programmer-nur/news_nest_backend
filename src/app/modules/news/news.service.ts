@@ -3,8 +3,11 @@ import { paginationHelper } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import IPaginationOption from '../../../interfaces/pagination';
 import { newsSearchableFields } from './news.constants';
-import { INewsFilters, NewsItem } from './news.interface';
+import { IComment, INewsFilters, NewsItem } from './news.interface';
 import { News } from './news.model';
+import { User } from '../user/user.model';
+import ApiError from '../../../errors/ApiError';
+import httpStatus from 'http-status';
 
 const insertIntoDb = async (newsData: NewsItem) => {
   const result = await News.create(newsData);
@@ -67,4 +70,53 @@ const getByIdFromDb = async (id: string) => {
   return result;
 };
 
-export const NewsService = { insertIntoDb, getAllFromDb, getByIdFromDb };
+const createLikeIntoDb = async (id: string, email: string) => {
+  const isExist = await User.isUserExist(email);
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'You are not authorized');
+  }
+  const result = await News.findOneAndUpdate(
+    { _id: id },
+    {
+      $push: { likes: email },
+    }
+  );
+  return result;
+};
+
+const removeLikeIntoDb = async (id: string, email: string) => {
+  const isExist = await User.isUserExist(email);
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'You are not authorized');
+  }
+  const result = await News.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: { likes: email },
+    }
+  );
+  return result;
+};
+
+const createCommentIntoDb = async (id: string, comment: IComment) => {
+  const isExist = await User.isUserExist(comment.email);
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'You are not authorized');
+  }
+  const result = await News.findOneAndUpdate(
+    { _id: id },
+    {
+      $pull: { comments: comment },
+    }
+  );
+  return result;
+};
+
+export const NewsService = {
+  insertIntoDb,
+  getAllFromDb,
+  getByIdFromDb,
+  removeLikeIntoDb,
+  createLikeIntoDb,
+  createCommentIntoDb,
+};

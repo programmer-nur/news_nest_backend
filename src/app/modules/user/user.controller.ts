@@ -8,7 +8,7 @@ import config from '../../../config';
 
 const createUser = tryAsync(async (req: Request, res: Response) => {
   const { ...userData } = req.body;
-  const result = await UserService.createUser(userData);
+  const result = await UserService.createUser(userData, req);
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,

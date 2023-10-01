@@ -43,4 +43,48 @@ const getByIdFromDb = tryAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-export const NewsController = { insertIntoDb, getAllFromDb, getByIdFromDb };
+
+const createLikeIntoDb = tryAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = req.user;
+  const result = await NewsService.createLikeIntoDb(id, user?.userEmail);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Create Like successfully!',
+    data: result,
+  });
+});
+
+const removeLikeIntoDb = tryAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = req.user;
+  const result = await NewsService.removeLikeIntoDb(id, user?.userEmail);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Remove Like successfully!',
+    data: result,
+  });
+});
+
+const createCommentIntoDb = tryAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { ...commentData } = req.body;
+  const result = await NewsService.removeLikeIntoDb(id, commentData);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Create comment successfully!',
+    data: result,
+  });
+});
+
+export const NewsController = {
+  insertIntoDb,
+  getAllFromDb,
+  getByIdFromDb,
+  createLikeIntoDb,
+  removeLikeIntoDb,
+  createCommentIntoDb,
+};

@@ -4,7 +4,7 @@ export interface NewsItem {
   heading: string;
   description: string[];
   images: {
-    img1: string;
+    img1?: string;
     img2?: string;
     img3?: string;
     img4?: string;
@@ -14,12 +14,13 @@ export interface NewsItem {
   subCategory?: string;
   publishedDate: string;
   likes?: string[];
-  comments?: {
-    comment: string;
-    name: string;
-    date: string;
-    email: string;
-  }[];
+  comments?: IComment[];
+}
+export interface IComment {
+  comment: string;
+  name: string;
+  date: string;
+  email: string;
 }
 
 export interface INewsFilters {
