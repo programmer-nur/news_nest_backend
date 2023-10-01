@@ -13,8 +13,8 @@ export interface NewsItem {
   category: string;
   subCategory?: string;
   publishedDate: string;
-  likes: string[];
-  comments: {
+  likes?: string[];
+  comments?: {
     comment: string;
     name: string;
     date: string;

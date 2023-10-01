@@ -5,7 +5,7 @@ import { NewsService } from './news.service';
 import { Request, Response } from 'express';
 
 const insertIntoDb = tryAsync(async (req: Request, res: Response) => {
-  const news = req.body;
+  const { ...news } = req.body;
   const result = await NewsService.insertIntoDb(news);
   sendResponse(res, {
     statusCode: httpStatus.OK,

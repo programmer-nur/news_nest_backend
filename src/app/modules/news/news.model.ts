@@ -3,18 +3,36 @@ import { NewsItem, NewsModel } from './news.interface';
 
 const newsSchema = new Schema<NewsItem>(
   {
-    heading: String,
-    description: [String],
+    heading: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: [String],
+      required: true,
+    },
     images: {
       img1: String,
       img2: String,
       img3: String,
       img4: String,
     },
-    reporter: String,
-    category: String,
-    subCategory: String,
-    publishedDate: String,
+    reporter: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    subCategory: {
+      type: String,
+      required: true,
+    },
+    publishedDate: {
+      type: String,
+      required: true,
+    },
     likes: [String],
     comments: [
       {
