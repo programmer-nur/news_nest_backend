@@ -16,6 +16,7 @@ export const userSchema = new Schema<IUser, IUserModel>(
     password: {
       type: String,
       required: true,
+      select: 0,
     },
     image: String,
     role: {

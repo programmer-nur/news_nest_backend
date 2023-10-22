@@ -61,7 +61,7 @@ const removeBookmarkList = async (email: string, data: NewsItem) => {
 const loginUser = async (payload: ILogin) => {
   const { email, password } = payload;
 
-  const isExist = await User.isUserExist(email);
+  const isExist = await User.findOne({ email });
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found!');
   }
@@ -86,6 +86,7 @@ const loginUser = async (payload: ILogin) => {
 
   return {
     accessToken,
+    user: isExist,
     refreshToken,
   };
 };
